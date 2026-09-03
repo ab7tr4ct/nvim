@@ -12,4 +12,6 @@ vim.opt.sidescrolloff = 5
 vim.opt.list = false --NOTE: disabled
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
-vim.o.foldexpr = "LazyVim.treesitter.foldexpr()"
+-- auto-session: без localoptions сессия не сохраняет filetype,
+-- и после восстановления буфер остаётся без подсветки
+vim.opt.sessionoptions:append("localoptions")

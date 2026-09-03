@@ -7,7 +7,7 @@ return {
     auto_session.setup({
       auto_create = true,
       auto_restore_enabled = true,
-      auto_session_supress_dirs = { "~/", "~/Downloads", "~/Documents" },
+      suppressed_dirs = { "~/", "~/Downloads", "~/Documents" },
     })
   end,
 }
