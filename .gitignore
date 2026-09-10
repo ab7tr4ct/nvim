@@ -9,3 +9,4 @@ foo.*
 *.log
 data
 TODO.md
+coder.lua
