@@ -6,7 +6,7 @@ return {
     opts = {
       servers = {
         gopls = {
-          -- Minimal config - golangci-lint will handle the rest
+          -- Merged on top of LazyVim's lang.go extra (staticcheck, analyses, hints, etc.)
           settings = {
             gopls = {
               buildFlags = { "-tags=wireinject" },
@@ -20,23 +20,21 @@ return {
     },
   },
 
-  -- Linting
+  -- Linting: lang.go extra registers golangcilint; only run it in projects with their own config
   {
     "mfussenegger/nvim-lint",
-    event = "VeryLazy",
-    config = function()
-      local lint = require("lint")
-
-      lint.linters_by_ft = {
-        go = { "golangcilint" },
-      }
-
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-        callback = function()
-          lint.try_lint()
-        end,
-      })
-    end,
+    opts = {
+      linters = {
+        golangcilint = {
+          condition = function(ctx)
+            return vim.fs.find(
+              { ".golangci.yml", ".golangci.yaml", ".golangci.toml", ".golangci.json" },
+              { path = ctx.filename, upward = true }
+            )[1]
+          end,
+        },
+      },
+    },
   },
 
   -- Go struct tags
